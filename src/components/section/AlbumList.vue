@@ -16,9 +16,9 @@ import axios from 'axios'
 import AlbumCard from '../commons/AlbumCard.vue'
 import SelectGenre from '../commons/SelectGenre.vue'
 
-
 export default {
     name: 'AlbumList',
+
     components: {
       AlbumCard,
       SelectGenre,
@@ -26,7 +26,7 @@ export default {
 
   data(){
     return{
-      dataAlbum: null,
+      dataAlbum: [],
       selected: "",
     }
   },
@@ -34,6 +34,10 @@ export default {
   methods:{
     selectedGenre(payload){
       this.selected = payload;
+    },
+
+    dataPresent(){
+      console.log(this.genreFilter)
     }
   },
 
@@ -51,14 +55,15 @@ export default {
 
   computed: {
     genreFilter(){
-      return this.dataAlbum.filter( (item) => {
+      const arrayFiltered = this.dataAlbum.filter((item) => {
         return item.genre.includes(this.selected);
       });
+
+      return arrayFiltered;
     }
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-
 </style>
