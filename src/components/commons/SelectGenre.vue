@@ -4,10 +4,7 @@
           <div class="col">
             <select v-model="genre" class="form-select" aria-label="Default select example" @change="$emit('selectedGenre', genre)">
                 <option value="">Select musical genre</option>
-                <option value="Rock">Rock</option>
-                <option value="Pop">Pop</option>
-                <option value="Jazz">Jazz</option>
-                <option value="Metal">Metal</option>
+                <option v-for="(genre, index) in allGenres" :key="index" :value="genre">{{genre}}</option>
             </select>
           </div>
       </div>
@@ -17,11 +14,16 @@
 <script>
 export default {
     name: 'SelectGenre',
+
+    props:{
+        allGenres: Array,
+    },
+
     data() {
         return{
             genre: '',
         }
-    }
+    },
 }
 </script>
 

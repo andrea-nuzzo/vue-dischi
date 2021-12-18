@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SelectGenre class="mt-5" @selectedGenre="selectedGenre"/>
+    <SelectGenre class="mt-5" @selectedGenre="selectedGenre" :allGenres=" allGenres"/>
     <div class="container">
       <div class="row p-5 gy-4">
         <div class="col-12 col-sm-6 col-lg-4" v-for="(item, index) in genreFilter" :key="index">
@@ -28,6 +28,7 @@ export default {
     return{
       dataAlbum: [],
       selected: "",
+      allGenres: [],
     }
   },
 
@@ -38,14 +39,23 @@ export default {
 
     dataPresent(){
       console.log(this.genreFilter)
-    }
+    },
   },
 
   created(){
     axios.get('https://flynn.boolean.careers/exercises/api/array/music')
         .then((response) => {
-            // handle success
+
+          // Innesto in dataAlbum tutti gli oggetti dell'API
            this.dataAlbum = response.data.response
+
+          //Ciclo per trovare tutti i generi delle canzoni presenti in "dataAlbum"
+           for(let i =0; i < this.dataAlbum.length; i++){
+            if(!this.allGenres.includes(this.dataAlbum[i].genre)){
+              this.allGenres.push(this.dataAlbum[i].genre);
+            }
+          }
+
         })
         .catch(function (error) {
             // handle error
@@ -53,13 +63,13 @@ export default {
         });
   },
 
+
   computed: {
+    //Funzione che filtra sui generi di musica
     genreFilter(){
-      const arrayFiltered = this.dataAlbum.filter((item) => {
+      return this.dataAlbum.filter((item) => {
         return item.genre.includes(this.selected);
       });
-
-      return arrayFiltered;
     }
   },
 }

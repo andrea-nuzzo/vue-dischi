@@ -16,7 +16,8 @@ export default {
     name: 'AlbumCard',
     props:{
         infoAlbum: Object,
-    }
+    },
+
 }
 
 </script>
